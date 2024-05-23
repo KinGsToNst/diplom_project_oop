@@ -1,22 +1,38 @@
 <?php
 session_start();
-require_once 'functions.php';
-if(is_not_logged_in()){
-    redirect_to("page_login.php");
-    exit();
+$db=include  'database/start.php';
+if(QueryBuilder::is_not_logged_in()){
+   QueryBuilder::redirect_to("/page_login.php");
+}
+if($_GET) {
+    QueryBuilder::Logout($_GET);
 }
 
 
-
 if (!empty($_GET["id"]) && is_numeric($_GET["id"])) {
-    $user_id=$_GET["id"];
-    $status_info=get_user_status();
-    $user_current_status=get_current_status($user_id);
+
+    $data=[
+       'id'=>  $_GET["id"]
+    ];
+
+
+    $user_current_status=$db->getOne('users',$data);
+    $status_info=$db->getAll('status');
+
+
+  //  $user_current_status=get_current_status($pdo,$user_id);
 
    // $user_current_status["status_id"]// это массив
     if($_POST){
-        $user_status=$_POST['status_id'];
-        set_user_status($user_id,$user_status);//установка статуса
+        $data=[
+          'id'=>$_GET["id"],
+          'status_id'=>$_POST['status_id']
+        ];
+
+        $status=$db->update('users',$data);//установка статуса
+        QueryBuilder::set_flash_message('success',"Вы обновили статус");
+        QueryBuilder::redirect_to('/index.php');
+        exit;
     }
 
 }else{
@@ -76,7 +92,8 @@ if (!empty($_GET["id"]) && is_numeric($_GET["id"])) {
                                                         <option value="<?php echo $info["status_id"] ?>" selected><?php echo $info["status_value"] ?></option>
                                                     <?php else: ?>
                                                         <option value="<?php echo $info["status_id"]; ?>"><?php echo $info["status_value"] ?></option>
-                                                    <?php endif; ?>
+                                                    <?php endif;
+                                                    ?>
                                                 <?php endforeach; ?>
                                             </select>
 

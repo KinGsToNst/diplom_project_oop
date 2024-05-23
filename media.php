@@ -1,29 +1,30 @@
 <?php
 session_start();
-require_once 'functions.php';
-if(is_not_logged_in()){
-    redirect_to("page_login.php");
+$db=include  'database/start.php';
+if(QueryBuilder::is_not_logged_in()){
+    QueryBuilder::redirect_to("/page_login.php");
 }
 
-
-
-
 if (!empty($_GET["id"]) && is_numeric($_GET["id"])) {
-$user_id=$_GET["id"];
-
-$current_avatar=get_current_avatar($user_id);
-
-
+$data=['id'=>$_GET["id"]];
+$current_avatar=$db->getOne('users',$data);
  if($_FILES){
     $image=$_FILES['image'];
-    var_dump($image);
     //если файл не загружен то перенаправляем к пользователю
     if($_FILES['image']['error']>0){
-        set_flash_message("danger","вы не загрузили картинку");
-        redirect_to("users.php");
+        QueryBuilder::set_flash_message("danger","вы не загрузили картинку");
+        QueryBuilder::redirect_to("index.php");
         exit();
     }else{
-        upload_avatar_profile($user_id,$image);
+        $data=[
+                'id'=>$_GET["id"],
+                'old_image'=>$current_avatar['image'],
+                'image'=>$_FILES['image']
+        ];
+        $image=$db->update('users',$data);
+        QueryBuilder::set_flash_message('success','Вы загрузили Аватар');
+        QueryBuilder::redirect_to('index.php');
+        exit;
     }
 
 
@@ -31,15 +32,11 @@ $current_avatar=get_current_avatar($user_id);
 
 
 }else{
-    if($_GET['logout']==true) {
-        // Если да, то разрушаем сессию
-        session_destroy();
-        // Перенаправляем пользователя на страницу входа или на другую страницу, куда вы хотите
-        header("Location: page_login.php");
-        exit;
+    if($_GET){
+        QueryBuilder::Logout($_GET);
     }
-    set_flash_message('danger','вы не передали значение id');
-    redirect_to("users.php");
+    QueryBuilder::set_flash_message('danger','вы не передали значение id');
+    QueryBuilder::redirect_to("index.php");
     exit;
 }
 
@@ -65,8 +62,8 @@ $current_avatar=get_current_avatar($user_id);
             <h1 class="subheader-title">
                 <i class='subheader-icon fal fa-image'></i> Загрузить аватар
             </h1>
-                <?php display_flash_message('success');?>
-                <?php display_flash_message('danger');?>
+                <?php QueryBuilder::display_flash_message('success');?>
+                <?php QueryBuilder::display_flash_message('danger');?>
         </div>
         <form action="" method="post" enctype="multipart/form-data">
             <div class="row">

@@ -1,34 +1,30 @@
 <?php
 session_start();
-require 'functions.php';
+//require 'functions.php';
+$db=include  'database/start.php';
 
 if(!empty($_POST['email']) && !empty($_POST['password'])){
     $email=$_POST['email'];
     $password=$_POST['password'];
-    $user=checking_user_existence($email);
 
-   /* $host = 'localhost'; // имя сервера базы данных
-    $dbname = 'diplom_project'; // имя базы данных
-    $username = 'root'; // имя пользователя базы данных
-    $pass = ''; // пароль пользователя базы данных
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $pass);
-    $sql="SELECT * FROM  users WHERE email=:email";
+$data=[
+  'email'=>$_POST['email'],
+    'password'=>$_POST['password']
+];
 
-    $statement=$pdo->prepare($sql);
-    $statement->execute(['email'=>$email]);
-    $user=$statement->fetch(PDO::FETCH_ASSOC);
-    var_dump($user);*/
-    //если пользователь есть
-    if(!empty($user)){
-        set_flash_message('danger','Этот эл адрес уже занят другим пользователем');
-        redirect_to("page_register.php");
+    $user = $db->getOne('users',$data);
+
+  if(!empty($user)){
+        QueryBuilder::set_flash_message('danger','Этот эл адрес уже занят другим пользователем');
+      QueryBuilder::redirect_to("page_register.php");
         exit;
     }else{
+        $data=['email'=>$_POST['email'],'password'=>$_POST['password']];
+        $db->create('users',$data);
 
-        register_user($email,$password);
-        set_flash_message("success","Вы успешно зарегистрировались и можете войти в систему");
-        redirect_to("/page_login.php");
-        exit;
+      QueryBuilder::set_flash_message("success","Вы успешно зарегистрировались и можете войти в систему");
+QueryBuilder::redirect_to("/page_login.php");
+        //exit;
     }
 }
 ?>
@@ -47,15 +43,15 @@ if(!empty($_POST['email']) && !empty($_POST['password'])){
     <!-- Remove Tap Highlight on Windows Phone IE -->
     <meta name="msapplication-tap-highlight" content="no">
     <!-- base css -->
-    <link id="vendorsbundle" rel="stylesheet" media="screen, print" href="css/vendors.bundle.css">
-    <link id="appbundle" rel="stylesheet" media="screen, print" href="css/app.bundle.css">
+    <link id="vendorsbundle" rel="stylesheet" media="screen, print" href="../css/vendors.bundle.css">
+    <link id="appbundle" rel="stylesheet" media="screen, print" href="../css/app.bundle.css">
     <link id="mytheme" rel="stylesheet" media="screen, print" href="#">
-    <link id="myskin" rel="stylesheet" media="screen, print" href="css/skins/skin-master.css">
+    <link id="myskin" rel="stylesheet" media="screen, print" href="../css/skins/skin-master.css">
     <!-- Place favicon.ico in the root directory -->
-    <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
-    <link rel="mask-icon" href="img/favicon/safari-pinned-tab.svg" color="#5bbad5">
-    <link rel="stylesheet" media="screen, print" href="css/fa-brands.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="../img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon/favicon-32x32.png">
+    <link rel="mask-icon" href="../img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="stylesheet" media="screen, print" href="../css/fa-brands.css">
 </head>
 <body>
     <div class="page-wrapper auth">
@@ -65,19 +61,19 @@ if(!empty($_POST['email']) && !empty($_POST['password'])){
                     <div class="d-flex align-items-center container p-0">
                         <div class="page-logo width-mobile-auto m-0 align-items-center justify-content-center p-0 bg-transparent bg-img-none shadow-0 height-9 border-0">
                             <a href="javascript:void(0)" class="page-logo-link press-scale-down d-flex align-items-center">
-                                <img src="img/logo.png" alt="SmartAdmin WebApp" aria-roledescription="logo">
+                                <img src="../img/logo.png" alt="SmartAdmin WebApp" aria-roledescription="logo">
                                 <span class="page-logo-text mr-1">Учебный проект</span>
                             </a>
                         </div>
                         <span class="text-white opacity-50 ml-auto mr-2 hidden-sm-down">
                             Уже зарегистрированы?
                         </span>
-                        <a href="page_login.php" class="btn-link text-white ml-auto ml-sm-0">
+                        <a href="../page_login.php" class="btn-link text-white ml-auto ml-sm-0">
                             Войти
                         </a>
                     </div>
                 </div>
-                <div class="flex-1" style="background: url(img/svg/pattern-1.svg) no-repeat center bottom fixed; background-size: cover;">
+                <div class="flex-1" style="background: url(../img/svg/pattern-1.svg) no-repeat center bottom fixed; background-size: cover;">
                     <div class="container py-4 py-lg-5 my-lg-5 px-4 px-sm-0">
                         <div class="row">
                             <div class="col-xl-12">
@@ -93,7 +89,7 @@ if(!empty($_POST['email']) && !empty($_POST['password'])){
                             </div>
                             <div class="col-xl-6 ml-auto mr-auto">
                                 <div class="card p-4 rounded-plus bg-faded">
-                                    <?php display_flash_message("danger");?>
+                                    <?php QueryBuilder::display_flash_message("danger");?>
                                     <form id="js-login" method="post" novalidate="" action="">
                                         <div class="form-group">
                                             <label class="form-label" for="emailverify">Email</label>
@@ -122,7 +118,7 @@ if(!empty($_POST['email']) && !empty($_POST['password'])){
         </div>
     </div>
     
-    <script src="js/vendors.bundle.js"></script>
+    <script src="../js/vendors.bundle.js"></script>
     <script>
         $("#js-login-btn").click(function(event)
         {

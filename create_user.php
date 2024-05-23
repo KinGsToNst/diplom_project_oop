@@ -1,16 +1,16 @@
 <?php
 session_start();
-require_once 'functions.php';
-
-if(is_not_logged_in()){
-    redirect_to("page_login.php");
+$db=include  'database/start.php';
+if(QueryBuilder::is_not_logged_in()){
+    QueryBuilder::redirect_to("/page_login.php");
 }
-
+if($_GET) {
+    QueryBuilder::Logout($_GET);
+}
 if(!empty($_POST['email'])){
-
     $email=$_POST['email'];
+    $user=$db->checking_user_existence('users',$email,"roles","roles.role_id=users.role_id");
     $password=$_POST['password'];
-    $user=checking_user_existence($email);
     $user_name=$_POST['user_name'];
     $job_title=$_POST['job_title'];
     $phone=$_POST['phone'];
@@ -22,33 +22,41 @@ if(!empty($_POST['email'])){
     $instagram=$_POST['instagram'];
 
     if(!empty($user)){
-        set_flash_message('danger','Этот эл адрес уже занят другим пользователем');
-        redirect_to("/create_user.php");
+
+        QueryBuilder::set_flash_message('danger','Этот эл адрес уже занят другим пользователем');
+        QueryBuilder::redirect_to("/create_user.php");
         exit;
 
     }else{
 
-        //создание нового пользователя
-        create_user($email, $password, $user_name, $job_title, $phone, $address,$status_id,$image,$vk,$telegram,$instagram);
-        set_flash_message("success","Пользователь добавлен успешно");
-        redirect_to("/users.php");
+        $data=[
+            'email'=>$email,
+            'password'=>$password,
+            'user_name'=>$user_name,
+            'job_title'=>$job_title,
+            'phone'=>$phone,
+            'address'=>$address,
+            'status_id'=>$status_id,
+            'image'=>$_FILES['image'],
+            'vk'=>$vk,
+            'telegram'=>$telegram,
+            'instagram'=>$instagram
+        ];
+        
+        $db->create('users',$data);
+
+       QueryBuilder::set_flash_message("success","Пользователь добавлен успешно");
+       QueryBuilder::redirect_to("/index.php");
 
     }
 }else{
-
+    if(isset($_POST['submit'])) {
+        QueryBuilder::set_flash_message('danger', 'вы не заполнили мэйл и пароль');
+       // QueryBuilder::redirect_to('create_user.php');
+    }
 
 }
 
-
-    if($_GET){
-        if($_GET['logout']==true) {
-            // Если да, то разрушаем сессию
-            session_destroy();
-            // Перенаправляем пользователя на страницу входа или на другую страницу, куда вы хотите
-            header("Location: page_login.php");
-            exit;
-        }
-    }
 
 ?>
 <!DOCTYPE html>
@@ -123,7 +131,7 @@ if(!empty($_POST['email'])){
                             <div class="panel-content">
                                 <!-- email -->
                                 <div class="form-group">
-                                    <?php display_flash_message("danger");?>
+                                    <?php QueryBuilder::display_flash_message("danger");?>
                                     <label class="form-label" for="simpleinput">Email</label>
                                     <input type="text" name="email" id="simpleinput" class="form-control">
                                 </div>
@@ -140,7 +148,9 @@ if(!empty($_POST['email'])){
                                     <label class="form-label" for="example-select">Выберите статус</label>
                                     <select class="form-control" id="example-select" name="status_id">
                                         <?php
-                                        $status_info=get_user_status();
+
+                                        $status_info=$db->getAll('status');
+
                                         foreach ($status_info as $info):?>
                                             <option value="<?php echo $info["status_id"]; ?>"><?php echo $info["status_value"]; ?></option>
                                         <?php endforeach;?>
@@ -208,7 +218,7 @@ if(!empty($_POST['email'])){
                                         </div>
                                     </div>
                                     <div class="col-md-12 mt-3 d-flex flex-row-reverse">
-                                        <button class="btn btn-success">Добавить</button>
+                                        <button name="submit" class="btn btn-success">Добавить</button>
                                     </div>
                                 </div>
                             </div>

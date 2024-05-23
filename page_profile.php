@@ -1,23 +1,22 @@
 <?php
 session_start();
-require_once 'functions.php';
-
-if(is_not_logged_in()){
-    redirect_to("page_login.php");
+$db=include  'database/start.php';
+if(QueryBuilder::is_not_logged_in()){
+    QueryBuilder::redirect_to("/page_login.php");
+}
+if($_GET) {
+    QueryBuilder::Logout($_GET);
 }
 
 if (!empty($_GET["id"]) && is_numeric($_GET["id"])) {
- $user_id=$_GET["id"];
-
-    $user_info=get_user_profile($user_id);
+$data=[
+        'id'=>$_GET["id"]
+      ];
+    $user_info=$db->getOne('users',$data);
 
 }else{
-    if($_GET['logout']==true) {
-        // Если да, то разрушаем сессию
-        session_destroy();
-        // Перенаправляем пользователя на страницу входа или на другую страницу, куда вы хотите
-        header("Location: page_login.php");
-        exit;
+    if($_GET) {
+        QueryBuilder::Logout($_GET);
     }
     set_flash_message('danger','вы не передали id');
     redirect_to("users.php");

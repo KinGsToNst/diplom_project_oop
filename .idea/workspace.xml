@@ -1,8 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;settings.editor.selected.configurable&quot;: &quot;application.passwordSafe&quot;
-  }
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="fbe50da1-acc8-471c-a4c0-482cff48ba52" name="Changes" comment="Дипломный проект">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/404.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controller/register.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/index.view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/create_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/create_user.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/delete_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/delete_user.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edit.php" beforeDir="false" afterPath="$PROJECT_DIR$/edit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/demo/avatars/avatar-m.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/demo/avatars/resized_66467466a5d28.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/demo/avatars/resized_664674c82d4f2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media.php" beforeDir="false" afterPath="$PROJECT_DIR$/media.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navbar.php" beforeDir="false" afterPath="$PROJECT_DIR$/navbar.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page_login.php" beforeDir="false" afterPath="$PROJECT_DIR$/page_login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page_profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/page_profile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page_register.php" beforeDir="false" afterPath="$PROJECT_DIR$/page_register.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security.php" beforeDir="false" afterPath="$PROJECT_DIR$/security.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/status.php" beforeDir="false" afterPath="$PROJECT_DIR$/status.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/upload_image/6646781703538.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/upload_image/6647124ad2d56.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/upload_image/66477e56a3110.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/upload_image/664895f11e7ca.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/users.php" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PhpServers">
+    <servers>
+      <server host="diplom-project.kz" id="cef00ac3-1a95-49e7-a567-58a01d1dcaf5" name="diplom-project.kz" port="9000" />
+    </servers>
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP" />
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
 }</component>
+  <component name="ProjectId" id="2gdjHPQlR5faKWyDLyO4636EPC0" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/OSPanel/domains/diplom-project-oop.kz",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "application.passwordSafe",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\OSPanel\domains\diplom-project-oop.kz" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\OSPanel\domains\diplom-project-oop.kz\img\demo\avatars" />
+      <recent name="C:\OSPanel\domains\diplom-project.kz" />
+      <recent name="C:\OSPanel\domains\diplom-project.kz\view" />
+    </key>
+  </component>
+  <component name="RunManager" selected="PHP Script.page_register.php">
+    <configuration name="page_login.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/page_login.php">
+      <CommandLine>
+        <PhpTestInterpreterSettings>
+          <option name="interpreterName" value="PHP" />
+        </PhpTestInterpreterSettings>
+      </CommandLine>
+      <method v="2" />
+    </configuration>
+    <configuration name="page_register.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/page_register.php">
+      <method v="2" />
+    </configuration>
+    <configuration name="diplom" type="PhpRemoteDebugRunConfigurationType" factoryName="PHP Remote Debug" filter_connections="FILTER" server_name="diplom-project.kz" session_id="PHPSTORM">
+      <method v="2">
+        <option name="LaunchBrowser.Before.Run" browser="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="PHP Remote Debug.diplom" />
+      <item itemvalue="PHP Script.page_register.php" />
+      <item itemvalue="PHP Script.page_login.php" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="PHP Script.page_register.php" />
+        <item itemvalue="PHP Script.page_login.php" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fbe50da1-acc8-471c-a4c0-482cff48ba52" name="Changes" comment="" />
+      <created>1716034260881</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1716034260881</updated>
+      <workItem from="1716034263796" duration="950000" />
+      <workItem from="1716039952726" duration="43000" />
+      <workItem from="1716046878320" duration="457000" />
+      <workItem from="1716065693320" duration="2541000" />
+      <workItem from="1716117964442" duration="3922000" />
+      <workItem from="1716285106655" duration="8656000" />
+      <workItem from="1716302428050" duration="17174000" />
+      <workItem from="1716349734118" duration="2557000" />
+      <workItem from="1716353112234" duration="15094000" />
+      <workItem from="1716385604391" duration="22903000" />
+      <workItem from="1716435941694" duration="9459000" />
+    </task>
+    <task id="LOCAL-00001" summary="Дипломный проект">
+      <option name="closed" value="true" />
+      <created>1716034360604</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1716034360604</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Дипломный проект" />
+    <option name="LAST_COMMIT_MESSAGE" value="Дипломный проект" />
+  </component>
 </project>

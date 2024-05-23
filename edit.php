@@ -1,35 +1,43 @@
 <?php
 session_start();
-require_once 'functions.php';
-if(is_not_logged_in()){
-    redirect_to("page_login.php");
+$db=include  'database/start.php';
+if(QueryBuilder::is_not_logged_in()){
+   QueryBuilder::redirect_to("/page_login.php");
 }
+if($_GET) {
+   QueryBuilder::Logout($_GET);
+}
+
 if (!empty($_GET["id"]) && is_numeric($_GET["id"])) {
-    $user_id = $_GET["id"];
+
+    $data=[
+            'id'=>$_GET['id']
+    ];
 // Получаем значения из запроса GET
-    $user_info=get_edit_information($user_id);
+    $user_info=$db->getOne('users',$data);
 
     if($_POST){
-        $user_name = $_POST["user_name"];
-        $job_title = $_POST["job_title"];
-        $phone = $_POST["phone"];
-        $address = $_POST["address"];
+                $data=[
+                'id'=>        $_GET["id"],
+                'user_name'=> $_POST["user_name"],
+                'job_title'=> $_POST["job_title"],
+                'phone'    => $_POST["phone"],
+                'address'  => $_POST["address"]
+                ];
+       $update=$db->update('users',$data);
 
-        update_information($user_id, $user_name, $job_title, $phone, $address);
+   QueryBuilder::set_flash_message('success','Вы обновили общую информацию');
+   QueryBuilder::redirect_to('index.php');
     }else{
 
     }
 }else{
-    if($_GET['logout']==true) {
-        // Если да, то разрушаем сессию
-        session_destroy();
-        // Перенаправляем пользователя на страницу входа или на другую страницу, куда вы хотите
-        header("Location: page_login.php");
-        exit;
+    if($_GET) {
+    QueryBuilder::Logout($_GET);
     }
-    set_flash_message('danger','Вы не передали id');
-    redirect_to("users.php");
-    exit;
+    QueryBuilder::set_flash_message('danger','Вы не передали id');
+    QueryBuilder::redirect_to("index.php");
+   exit;
 }
 ?>
 <!DOCTYPE html>
@@ -65,9 +73,6 @@ if (!empty($_GET["id"]) && is_numeric($_GET["id"])) {
                             </div>
                             <div class="panel-content">
                                 <!-- username -->
-
-                                <div class="form-group">
-                                    <label class="form-label" for="simpleinput">Имя</label>
                                     <input type="text" name="user_name" id="simpleinput" class="form-control" value="<?=$user_info["user_name"];?>">
                                 </div>
 

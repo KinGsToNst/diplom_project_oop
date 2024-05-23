@@ -1,29 +1,47 @@
 <?php
 session_start();
-require 'functions.php';
+$db=include  'database/start.php';
+if(QueryBuilder::is_not_logged_in()){
+    QueryBuilder::redirect_to("/page_login.php");
+}
 if (!empty($_GET["id"]) && is_numeric($_GET["id"])) {
    $user_id=$_GET["id"];
+   $data=[
+           'id'=>$_GET["id"]
+   ];
 
-    $security=security_check($user_id);
+    $security=$db->getOne('users',$data);
+
    if($_POST){
-       $email=$_POST["email"];
-       $password=$_POST["password"];
-       update_security($user_id,$email,$password);
+
+        $data=[
+            'id'=>$_GET["id"],
+            'email'=>$_POST["email"],
+            'password'=>$_POST["password"],
+            'password_confirm'=>$_POST["password_confirm"]
+        ];
+       if (!empty($data)) {
+           if ($data['password'] !== $data['password_confirm']) { // Вот здесь добавлено отрицание !==
+               QueryBuilder::set_flash_message('danger', 'Подтверждение пароля неправильно');
+               QueryBuilder::redirect_to('index.php');
+               exit();
+           }
+       }
+       $db->update('users',$data);
+       QueryBuilder::set_flash_message('success','Вы обновили безопасность');
+       QueryBuilder::redirect_to('index.php');
+
    }else{
 
    }
 
 
 }else{
-    if($_GET['logout']==true) {
-        // Если да, то разрушаем сессию
-        session_destroy();
-        // Перенаправляем пользователя на страницу входа или на другую страницу, куда вы хотите
-        header("Location: page_login.php");
-        exit;
+    if($_GET) {
+        QueryBuilder::Logout($_GET);
     }
-    set_flash_message('danger','вы не передали идентификатор');
-    redirect_to("users.php");
+    QueryBuilder::set_flash_message('danger','вы не передали идентификатор');
+    QueryBuilder::redirect_to("users.php");
     exit;
 }
 ?>

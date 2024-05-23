@@ -1,11 +1,26 @@
 <?php
 session_start();
-require 'functions.php';
+$db=include  'database/start.php';
 
 if(!empty($_POST['email']) && !empty($_POST['password'])){
-    $email=$_POST['email'];
-    $password=$_POST['password'];
-  login($email,$password);
+$joins = [
+        [
+            'type' => 'LEFT', // Тип join-а (INNER, LEFT, RIGHT и т. д.)
+            'table' => 'roles', // Имя таблицы для join-а
+            'condition' => 'users.role_id = roles.role_id' // Условие join-а
+        ]
+    ];
+    $data=[
+        'email'=>$_POST['email'],
+        'password'=>$_POST['password']
+    ];
+    $result = $db->getOne('users',$data, $joins);
+   if($result){
+       QueryBuilder::set_flash_message('success','Добро Пожаловать ');
+       QueryBuilder::redirect_to('/index.php');
+   }else{
+
+   }
 
 }
 
@@ -46,8 +61,8 @@ if(!empty($_POST['email']) && !empty($_POST['password'])){
             </a>
         </div>
         <div class="card p-4 border-top-left-radius-0 border-top-right-radius-0">
-            <?php display_flash_message("success");?>
-            <?php display_flash_message("danger");?>
+            <?php QueryBuilder::display_flash_message("success");?>
+            <?php QueryBuilder::display_flash_message("danger");?>
             <form action="" method="post">
                 <div class="form-group">
                     <label class="form-label" for="username">Email</label>
